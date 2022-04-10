@@ -50,7 +50,7 @@ const Container = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  margin-right: 20px;
+  margin: 0px 20px;
 `;
 
 const Welcome = styled.div`
