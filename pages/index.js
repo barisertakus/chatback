@@ -46,6 +46,7 @@ const Container = styled.div`
   justify-content: center;
   height: calc(100vh - 80px);
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const LogoWrapper = styled.div`
