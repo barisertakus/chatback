@@ -6,6 +6,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import { Chat } from "@mui/icons-material";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -32,7 +33,7 @@ export default function Home() {
             <Header> ChatBack for Messaging </Header>
             <SubHeader>Realtime chat with your friends</SubHeader>
             <Button variant="contained" endIcon={<Chat />}>
-              Get Started
+              <Link href="/login"><a>Get Started</a></Link>
             </Button>
           </Welcome>
         </Container>
