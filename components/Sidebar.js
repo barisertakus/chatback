@@ -16,8 +16,8 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div`
-  flex: 0.4;
+  /* flex: 0.4;
   min-width: 420px;
-  max-width: 485px;
-  margin-right: 20px;
+  /* max-width: 485px; */
+  /* margin-right: 20px; */
 `;
