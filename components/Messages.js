@@ -1,31 +1,35 @@
 import React from "react";
 import WhiteBox from "./WhiteBox";
 import styled from "styled-components";
+import MessageInput from "./MessageInput";
+import ChatInfo from "./ChatInfo";
+import MessageList from "./MessageList";
 
 function Messages() {
   return (
-    <Container>
-      <WhiteBox>
-        <Wrapper>
-          <h3>Messages</h3>
-        </Wrapper>
-      </WhiteBox>
-    </Container>
+    <WhiteBox>
+      <Wrapper>
+        <ChatInfo />
+        <hr />
+        <MessageList />
+        <MessageInput />
+      </Wrapper>
+    </WhiteBox>
   );
 }
 
 export default Messages;
 
-const Container = styled.div`
-  flex: 1;
-  min-width: 420px;
-`;
-
 const Wrapper = styled.div`
   height: 580px;
   padding: 20px;
 
-  h3{
+  h3 {
     margin: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
   }
 `;
