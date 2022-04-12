@@ -49,7 +49,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "#6E00FF" }}>
+    <AppBar position="sticky" style={{ backgroundColor: "#6E00FF" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
@@ -108,15 +108,15 @@ const Navbar = () => {
             }}
           >
             {pages.map((page, i) => (
-              <Button
-                key={i}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                <Link href={"/"+page.name}>
-                  <a>{page.label}</a>
-                </Link>
-              </Button>
+              <Link href={"/" + page.name} key={i} passHref>
+                <Button
+                  component="a"
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.label}
+                </Button>
+              </Link>
             ))}
           </Box>
 
