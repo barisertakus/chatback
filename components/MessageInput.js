@@ -44,7 +44,7 @@ function MessageInput({ sendMessage }) {
           <CameraAltOutlinedIcon />
         </IconButton>
       </InputBox>
-      <BigIcon>
+      <BigIcon className="bigIcon">
         <StyledMicIcon />
       </BigIcon>
     </Container>
@@ -56,6 +56,17 @@ export default MessageInput;
 const Container = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 407px){
+    margin-left: -9px;
+
+    .bigIcon {
+      margin-left: 5px;
+    }
+
+    .bigIcon > svg {
+      font-size: 22px;
+    }
+  }
 `;
 
 const InputBox = styled.div`
@@ -64,7 +75,6 @@ const InputBox = styled.div`
   border-radius: 15px;
   background-color: #eff6fc;
   padding: 5px;
-  margin-right: 20px;
 `;
 
 const Input = styled.input`
@@ -84,6 +94,8 @@ const RotatedIconButton = styled(IconButton)`
 const BigIcon = styled(IconButton)`
   background-color: #6e00ff;
   border-radius: 10px;
+
+  margin-left: 10px;
 
   &:hover {
     > svg > path {

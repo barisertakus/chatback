@@ -32,4 +32,8 @@ const Container = styled.div`
 const Content = styled.div`
   padding: 20px;
   background-color: #eff6fc;
+
+  @media (max-width: 407px){
+    padding: 7px;
+  }
 `;
