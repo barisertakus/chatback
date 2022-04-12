@@ -11,8 +11,12 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import Link from "next/link";
 
-const pages = ["Chat", "Login"];
+const pages = [
+  { label: "Chat", name: "chat" },
+  { label: "Login", name: "login" },
+];
 const settings = ["Logout"];
 
 const Navbar = () => {
@@ -81,9 +85,13 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {pages.map((page, i) => (
+                <MenuItem key={i} onClick={handleCloseNavMenu}>
+                  <Link href={"/" + page.name}>
+                    <a>
+                      <Typography textAlign="center">{page.label}</Typography>
+                    </a>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -91,14 +99,23 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <Logo />
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, justifyContent: "flex-end", mr:2 }}>
-            {pages.map((page) => (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              justifyContent: "flex-end",
+              mr: 2,
+            }}
+          >
+            {pages.map((page, i) => (
               <Button
-                key={page}
+                key={i}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Link href={"/"+page.name}>
+                  <a>{page.label}</a>
+                </Link>
               </Button>
             ))}
           </Box>
