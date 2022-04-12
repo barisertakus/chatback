@@ -2,7 +2,7 @@ import React from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+import MicIcon from "@mui/icons-material/Mic";
 import { IconButton } from "@mui/material";
 import styled from "styled-components";
 function MessageInput() {
@@ -70,7 +70,7 @@ const BigIcon = styled(IconButton)`
   }
 `;
 
-const StyledMicIcon = styled(MicNoneOutlinedIcon)`
+const StyledMicIcon = styled(MicIcon)`
   font-size: 28px;
   > path {
     color: white;

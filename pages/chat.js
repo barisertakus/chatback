@@ -10,7 +10,7 @@ function Chat() {
     <Container>
       <Content>
         <Grid container spacing={2}>
-          <Grid item xs={12} xl={3} lg={4} md={5} >
+          <Grid item xs={12} xl={3} lg={4} md={5}>
             <Sidebar />
           </Grid>
           <Grid item xs={12} xl={9} lg={8} md={7}>
@@ -31,4 +31,5 @@ const Container = styled.div`
 
 const Content = styled.div`
   padding: 20px;
+  background-color: #eff6fc;
 `;
