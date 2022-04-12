@@ -24,5 +24,5 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 20px 0 0 20px;
+  padding: 20px;
 `;

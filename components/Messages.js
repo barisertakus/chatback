@@ -18,7 +18,6 @@ export default Messages;
 
 const Container = styled.div`
   flex: 1;
-  margin-left: 10px;
   min-width: 420px;
 `;
 
