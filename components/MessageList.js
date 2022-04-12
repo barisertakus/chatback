@@ -1,14 +1,28 @@
-import React from "react";
+import { Button } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
-function MessageList() {
-  
+function MessageList({ messages }) {
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    console.log(messagesEndRef);
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
     <Container>
       <Messages>
-        <Message className="sender">Are we meeting today?</Message>
-        <Message className="receiver">This is really nice!</Message>
-        <Message className="receiver">I was thinking about my new car, I bought it last year.</Message>
+        {messages.map((message, i) => (
+          <Message key={i} className={message.isSender ? "sender" : "receiver"}>
+            {message.content}
+          </Message>
+        ))}
+        <div ref={messagesEndRef} />
       </Messages>
     </Container>
   );
@@ -28,6 +42,10 @@ const Messages = styled.ul`
   list-style: none;
   overflow-y: scroll;
   overflow-x: hidden;
+
+  > div {
+    float: left;
+  }
 `;
 
 const Message = styled.li`
@@ -46,7 +64,7 @@ const Message = styled.li`
     max-width: 400px;
   }
 
-  @media (min-width: 900px) and (max-width: 990px){
+  @media (min-width: 900px) and (max-width: 990px) {
     max-width: 350px;
   }
 
@@ -64,10 +82,6 @@ const Message = styled.li`
     background-color: #6e00ff;
   }
 
-  &.receiver:before {
-    right: -80px;
-  }
-
   &.receiver:after {
     border-top: 15px solid #6e00ff;
     border-right: 15px solid transparent;
@@ -78,10 +92,6 @@ const Message = styled.li`
     float: left;
     margin-left: 20px;
     background-color: rgba(25, 147, 147, 0.2);
-  }
-
-  &.sender:before {
-    left: -80px;
   }
 
   &.sender:after {

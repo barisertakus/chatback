@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import MicIcon from "@mui/icons-material/Mic";
 import { IconButton } from "@mui/material";
 import styled from "styled-components";
-function MessageInput() {
+function MessageInput({ sendMessage }) {
+  const [message, setMessage] = useState("");
+
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
+  const handlePress = (e) => {
+    e.key === "Enter" && clearAndSend();
+  };
+
+  const clearInput = () => {
+    setMessage("");
+  }
+
+  const clearAndSend = () => {
+    sendMessage(message);
+    clearInput();
+  }
+
   return (
     <Container>
       <InputBox>
         <RotatedIconButton>
           <AttachFileIcon />
         </RotatedIconButton>
-        <Input placeholder="Type your message..." />
+        <Input
+          value={message}
+          onChange={handleChange}
+          placeholder="Type your message..."
+          onKeyPress={handlePress}
+        />
         <IconButton>
           <SentimentVerySatisfiedOutlinedIcon />
         </IconButton>
