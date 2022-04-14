@@ -14,12 +14,12 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       usersApi.endpoints.signupUser.matchFulfilled,
-      (state, action) => action
+      (state, action) => action.payload
     );
 
     builder.addMatcher(
       usersApi.endpoints.loginUser.matchFulfilled,
-      (state, action) => action
+      (state, action) => action.payload
     );
 
     builder.addMatcher(
@@ -28,6 +28,8 @@ const userSlice = createSlice({
     );
   },
 });
+
+export const selectUser = (state) => state.user;
 
 export const { addNotifications, resetNotifications } = userSlice.actions;
 

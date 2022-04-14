@@ -32,7 +32,7 @@ export default function Home() {
             <Header> ChatBack for Messaging </Header>
             <SubHeader>Realtime chat with your friends</SubHeader>
             <Button variant="contained" endIcon={<Chat />}>
-              <Link href="/login"><a>Get Started</a></Link>
+              <Link href="/chat"><a>Get Started</a></Link>
             </Button>
           </Welcome>
         </Container>
