@@ -8,18 +8,28 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import React, { useState } from "react";
+import Router from "next/router";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { AppContext } from "../context/appContext";
+import { useLoginUserMutation } from "../services/usersApi";
 
 function Login() {
   const [loginForm, setLoginForm] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
+  const [login, { isLoading, error }] = useLoginUserMutation();
+
+  const { socket } = useContext(AppContext);
+
   const handleSubmit = (event) => {
-    // dispatch(login({ payload: loginForm, history: history }));
-    console.log(loginForm);
+    login(loginForm).then((response) => {
+      // console.log(response);
+      socket.emit("new-user");
+      Router.push("/chat");
+    });
   };
 
   const handleChange = (e) => {
@@ -40,11 +50,11 @@ function Login() {
             margin="normal"
             required
             fullWidth
-            label="Username"
-            name="username"
-            value={loginForm.username}
+            label="Email"
+            name="email"
+            value={loginForm.email}
             onChange={handleChange}
-            autoComplete="username"
+            autoComplete="email"
             autoFocus
           />
           <TextField

@@ -1,7 +1,6 @@
 import UploadRoundedIcon from "@mui/icons-material/AddAPhoto";
 import { Button, IconButton } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -9,11 +8,11 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSignupUserMutation } from "../services/usersApi";
 
 function Signup() {
   const [signForm, setSignForm] = React.useState({
     name: "",
-    username: "",
     email: "",
     password: "",
   });
@@ -21,6 +20,8 @@ function Signup() {
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState(false);
+
+  const [signupUser, { isLoading, error }] = useSignupUserMutation();
 
   const uploadImage = async () => {
     const data = new FormData();
@@ -48,7 +49,12 @@ function Signup() {
     console.log(signForm);
     if (!image) return alert("Please upload your profile picture!");
     const url = await uploadImage(image);
-    console.log(url)
+    console.log(url);
+    // const url = "test";
+    console.log({ ...signForm, picture: url })
+    signupUser({ ...signForm, picture: url }).then((response) => {
+      console.log(response);
+    });
   };
 
   const handleChange = (e) => {
@@ -104,17 +110,6 @@ function Signup() {
                 fullWidth
                 label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                onChange={handleChange}
-                name="username"
-                value={signForm.username}
-                fullWidth
-                label="Username"
-                autoComplete="username"
               />
             </Grid>
             <Grid item xs={12}>
