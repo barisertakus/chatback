@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 const pages = [
   { label: "Chat", name: "chat" },
@@ -20,6 +22,8 @@ const pages = [
 const settings = ["Logout"];
 
 const Navbar = () => {
+  const user = useSelector(selectUser);
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -86,7 +90,13 @@ const Navbar = () => {
               }}
             >
               {pages.map((page, i) => (
-                <MenuItem key={i} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={i}
+                  onClick={handleCloseNavMenu}
+                  style={{
+                    display: user && page.name === "login" ? "none" : "block",
+                  }}
+                >
                   <Link href={"/" + page.name}>
                     <a>
                       <Typography textAlign="center">{page.label}</Typography>
@@ -112,7 +122,11 @@ const Navbar = () => {
                 <Button
                   component="a"
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: user && page.name === "login" ? "none" : "block",
+                  }}
                 >
                   {page.label}
                 </Button>
@@ -123,7 +137,11 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {user ? (
+                  <Avatar alt={user.name} src={user.picture} />
+                ) : (
+                  <Avatar alt="Remy Sharp" src="/assets/robot.png" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu

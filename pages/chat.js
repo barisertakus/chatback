@@ -1,11 +1,14 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import styled from "styled-components";
-import Sidebar from "../components/Sidebar";
-import Messages from "../components/Messages";
 import { Grid } from "@mui/material";
+import React from "react";
+import { useSelector } from "react-redux";
+import styled from "styled-components";
+import Messages from "../components/Messages";
+import Sidebar from "../components/Sidebar";
+import { selectUser } from "../features/userSlice";
 
 function Chat() {
+  const user = useSelector(selectUser);
+
   return (
     <Container>
       <Content>
@@ -33,7 +36,7 @@ const Content = styled.div`
   padding: 20px;
   background-color: #eff6fc;
 
-  @media (max-width: 407px){
+  @media (max-width: 407px) {
     padding: 7px;
   }
 `;

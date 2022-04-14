@@ -6,7 +6,6 @@ function MessageList({ messages }) {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
-    console.log(messagesEndRef);
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
