@@ -2,10 +2,10 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-function ListItem({ roomName }) {
+function ListItem({ roomName, handleClick, active }) {
   return (
     <Container>
-      <Item>
+      <Item onClick={handleClick} {...(active ? {className: 'active'} : {})}>
         <RoomInfo>
           <Avatar />
           <RoomHeader>
@@ -38,9 +38,15 @@ const Container = styled.li`
 `;
 
 const Item = styled.div`
+  &.active{
+    background-color : lightblue;
+    border-radius: 10px;
+  }
+  ${({active}) => active && {}}
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  cursor: pointer;
 `;
 
 const RoomInfo = styled.div`
@@ -50,9 +56,8 @@ const RoomInfo = styled.div`
 
 const RoomHeader = styled.div`
   margin-left: 20px;
-
   > h5 {
-    margin: 0;
+    margin: 0 0 5px 0;
     font-weight: bold;
   }
 `;

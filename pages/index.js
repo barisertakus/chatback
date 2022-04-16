@@ -31,9 +31,11 @@ export default function Home() {
           <Welcome>
             <Header> ChatBack for Messaging </Header>
             <SubHeader>Realtime chat with your friends</SubHeader>
-            <Button variant="contained" endIcon={<Chat />}>
-              <Link href="/chat"><a>Get Started</a></Link>
-            </Button>
+            <Link href="/chat" passHref>
+              <Button variant="contained" endIcon={<Chat />} component="a">
+                Get Started
+              </Button>
+            </Link>
           </Welcome>
         </Container>
       </div>

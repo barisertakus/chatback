@@ -18,5 +18,5 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div`
-  height: 85vh;
+  height: 84vh;
 `;

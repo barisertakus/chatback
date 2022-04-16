@@ -23,14 +23,8 @@ function Users() {
 
   return (
     <RoomList header="Users" length={5}>
-      {members.map((member, i, { length }) => (
-        <>
-        
-        <ListItem key={i} roomName={member.name} />
-        <ListItem key={i} roomName={member.name} />
-        </>
-
-        
+      {members.map((member) => (
+        <ListItem key={member._id} roomName={member.name} />
       ))}
     </RoomList>
   );

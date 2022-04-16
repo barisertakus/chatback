@@ -34,7 +34,7 @@ const Container = styled.div`
 `;
 
 const Messages = styled.ul`
-  height: 490px;
+  height: 440px;
   margin: 24px auto 0 auto;
   padding: 0 20px 0 0;
   list-style: none;
