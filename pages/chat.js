@@ -1,13 +1,20 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Messages from "../components/Messages";
 import Sidebar from "../components/Sidebar";
+import { AppContext } from "../context/appContext";
 import { selectUser } from "../features/userSlice";
 
-function Chat() {
+function Chat({ rooms }) {
+  const { setRooms } = useContext(AppContext);
+
   const user = useSelector(selectUser);
+
+  useEffect(() => {
+    setRooms(rooms);
+  }, [rooms, setRooms]);
 
   return (
     <Container>
@@ -40,3 +47,15 @@ const Content = styled.div`
     padding: 7px;
   }
 `;
+
+export const getStaticProps = async () => {
+  const res = await fetch("http://localhost:4000/rooms");
+
+  const rooms = await res.json();
+
+  return {
+    props: {
+      rooms,
+    },
+  };
+};

@@ -11,19 +11,11 @@ function Rooms({ joinRoom }) {
   const { socket, currentRoom, setCurrentRoom, rooms, setRooms } =
     useContext(AppContext);
 
-  const getRooms = () => {
-    fetch("http://localhost:4000/rooms")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("rooms", data);
-        setRooms(data);
-      });
-  };
-
   useEffect(() => {
-    if (user && !currentRoom) {
+    if (user) {
+      // const roomSelect = currentRoom || "general"
       setCurrentRoom("general");
-      getRooms();
+      // getRooms();
       socket.emit("join-room", "general");
       socket.emit("new-user");
     }

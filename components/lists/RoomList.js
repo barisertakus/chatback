@@ -11,7 +11,7 @@ function RoomList({ header, children, length }) {
   return (
     <Container>
       <WhiteBox>
-        <ListWrapper length={(length * 60 + 65) + "px"}>
+        <ListWrapper length={(length * 60 + 70) + "px"}>
           <h3>{header}</h3>
           <Rooms>{children}</Rooms>
         </ListWrapper>

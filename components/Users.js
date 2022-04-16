@@ -18,7 +18,6 @@ function Users({joinRoom}) {
   } = useContext(AppContext);
 
   socket.off("new-user").on("new-user", (payload) => {
-    console.log(payload);
     setMembers(payload);
   });
 
