@@ -26,7 +26,6 @@ function Login() {
 
   const handleSubmit = (event) => {
     login(loginForm).then((response) => {
-      // console.log(response);
       socket.emit("new-user");
       Router.push("/chat");
     });

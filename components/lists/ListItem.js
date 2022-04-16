@@ -2,14 +2,14 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-function ListItem({ noHr }) {
+function ListItem({ roomName }) {
   return (
     <Container>
       <Item>
         <RoomInfo>
           <Avatar />
           <RoomHeader>
-            <h5>My Friends</h5>
+            <h5>{roomName}</h5>
             <p>First Message</p>
           </RoomHeader>
         </RoomInfo>
@@ -18,7 +18,6 @@ function ListItem({ noHr }) {
           <p>Today, 9:52PM</p>
         </TimeInfo>
       </Item>
-      <hr style={ noHr && { display: "none" }} />
     </Container>
   );
 }
@@ -41,7 +40,7 @@ const Container = styled.li`
 const Item = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px;
 `;
 
 const RoomInfo = styled.div`
