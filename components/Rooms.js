@@ -5,20 +5,11 @@ import { selectUser } from "../features/userSlice";
 import ListItem from "./lists/ListItem";
 import RoomList from "./lists/RoomList";
 
-function Rooms() {
+function Rooms({ joinRoom }) {
   const user = useSelector(selectUser);
 
-  const {
-    socket,
-    members,
-    setMembers,
-    currentRoom,
-    setCurrentRoom,
-    rooms,
-    setRooms,
-    privateMemberMessage,
-    setPrivateMemberMessage,
-  } = useContext(AppContext);
+  const { socket, currentRoom, setCurrentRoom, rooms, setRooms } =
+    useContext(AppContext);
 
   const getRooms = () => {
     fetch("http://localhost:4000/rooms")
@@ -29,21 +20,8 @@ function Rooms() {
       });
   };
 
-  const joinRoom = (room, isPublic = true) => {
-    if (!user) {
-      return alert("You must login!");
-    }
-    socket.emit("join-room", room);
-
-    setCurrentRoom(room);
-
-    if (isPublic) {
-      setPrivateMemberMessage(null);
-    }
-  };
-
   useEffect(() => {
-    if (user) {
+    if (user && !currentRoom) {
       setCurrentRoom("general");
       getRooms();
       socket.emit("join-room", "general");

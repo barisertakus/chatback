@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 function ListItem({ roomName, handleClick, active }) {
+  // console.log(roomName, active)
   return (
     <Container>
       <Item onClick={handleClick} {...(active ? {className: 'active'} : {})}>
@@ -26,7 +27,7 @@ export default ListItem;
 
 const Container = styled.li`
   :hover{
-    background-color: #F7EBE8;
+    background-color: #f0eded;
     border-radius: 10px;
     cursor: pointer;
   }
@@ -39,10 +40,9 @@ const Container = styled.li`
 
 const Item = styled.div`
   &.active{
-    background-color : lightblue;
+    background-color : #d3d3d3;
     border-radius: 10px;
   }
-  ${({active}) => active && {}}
   display: flex;
   justify-content: space-between;
   padding: 10px;
