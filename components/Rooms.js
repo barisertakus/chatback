@@ -29,6 +29,19 @@ function Rooms() {
       });
   };
 
+  const joinRoom = (room, isPublic = true) => {
+    if (!user) {
+      return alert("You must login!");
+    }
+    socket.emit("join-room", room);
+
+    setCurrentRoom(room);
+
+    if (isPublic) {
+      setPrivateMemberMessage(null);
+    }
+  };
+
   useEffect(() => {
     if (user) {
       setCurrentRoom("general");
@@ -39,9 +52,14 @@ function Rooms() {
   }, []);
 
   return (
-    <RoomList header="Rooms" length={4}>
+    <RoomList header="Rooms" length={3}>
       {rooms.map((room, i, { length }) => (
-        <ListItem key={i} roomName={room} />
+        <ListItem
+          key={i}
+          roomName={room}
+          handleClick={() => joinRoom(room)}
+          active={room === currentRoom}
+        />
       ))}
     </RoomList>
   );
