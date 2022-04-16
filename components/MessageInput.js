@@ -1,27 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SentimentVerySatisfiedOutlinedIcon from "@mui/icons-material/SentimentVerySatisfiedOutlined";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import MicIcon from "@mui/icons-material/Mic";
 import { IconButton } from "@mui/material";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
+import { getStringToday, getStringTime } from "../utils/dateUtils";
+import { AppContext } from "../context/appContext";
+
 function MessageInput({ sendMessage }) {
   const [message, setMessage] = useState("");
+  const user = useSelector(selectUser);
+  const { socket, currentRoom } = useContext(AppContext);
 
   const handleChange = (e) => {
     setMessage(e.target.value);
   };
 
   const handlePress = (e) => {
-    e.key === "Enter" && clearAndSend();
+    e.key === "Enter" && handleSubmit();
   };
 
   const clearInput = () => {
     setMessage("");
   };
 
-  const clearAndSend = () => {
-    sendMessage(message);
+  const todayDate = getStringToday();
+  const time = getStringTime();
+
+  const handleSubmit = () => {
+    if (!message) return;
+    socket.emit("message-room", currentRoom, user, time, todayDate, message);
     clearInput();
   };
 
