@@ -18,12 +18,12 @@ function MessageInput({ sendMessage }) {
 
   const clearInput = () => {
     setMessage("");
-  }
+  };
 
   const clearAndSend = () => {
     sendMessage(message);
     clearInput();
-  }
+  };
 
   return (
     <Container>
@@ -56,7 +56,7 @@ export default MessageInput;
 const Container = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 407px){
+  @media (max-width: 407px) {
     margin-left: -9px;
 
     .bigIcon {
@@ -92,17 +92,17 @@ const RotatedIconButton = styled(IconButton)`
 `;
 
 const BigIcon = styled(IconButton)`
-  background-color: #6e00ff;
-  border-radius: 10px;
+  &&& {
+    background-color: #6e00ff;
+    border-radius: 10px;
+    margin-left: 10px;
 
-  margin-left: 10px;
-
-  &:hover {
-    > svg > path {
-      color: #6e00ff;
+    &:hover {
+      > svg > path {
+        color: #6e00ff;
+      }
+      background-color: #c7cedb;
     }
-
-    background-color: #c7cedb;
   }
 `;
 

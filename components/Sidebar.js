@@ -2,13 +2,15 @@ import { Avatar } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import RoomList from "./lists/RoomList";
+import Rooms from "./Rooms";
 import WhiteBox from "./WhiteBox";
+import Users from "./Users"
 
 function Sidebar() {
   return (
     <Container>
-      <RoomList />
-      <RoomList />
+      <Rooms />
+      <Users />
     </Container>
   );
 }
@@ -16,8 +18,5 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div`
-  /* flex: 0.4;
-  min-width: 420px;
-  /* max-width: 485px; */
-  /* margin-right: 20px; */
+  height: 85vh;
 `;

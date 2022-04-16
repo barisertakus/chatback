@@ -17,6 +17,8 @@ function Messages() {
     { isSender: false, content: "This is really nice!" },
     { isSender: true, content: "Are we meeting today?" },
     { isSender: false, content: "This is really nice!" },
+    { isSender: true, content: "Hello!" },
+    { isSender: false, content: "Hi!" },
   ]);
 
   const sendMessage = (message) => {
@@ -39,7 +41,7 @@ function Messages() {
 export default Messages;
 
 const Wrapper = styled.div`
-  height: 580px;
+  height: 690px;
   padding: 20px;
 
   h3 {

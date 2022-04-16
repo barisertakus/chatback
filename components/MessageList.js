@@ -30,12 +30,11 @@ function MessageList({ messages }) {
 export default MessageList;
 
 const Container = styled.div`
-  height: 400px;
   margin-bottom: 15px;
 `;
 
 const Messages = styled.ul`
-  height: 400px;
+  height: 490px;
   margin: 24px auto 0 auto;
   padding: 0 20px 0 0;
   list-style: none;
