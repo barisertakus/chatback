@@ -1,7 +1,8 @@
 import { io } from "socket.io-client";
 import React from "react";
+import { URL } from "../environment";
 
-const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = URL;
 export const socket = io(SOCKET_URL);
 
 export const AppContext = React.createContext();

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Messages from "../components/Messages";
 import Sidebar from "../components/Sidebar";
 import { AppContext } from "../context/appContext";
+import { URL } from "../environment";
 import { selectUser } from "../features/userSlice";
 
 function Chat({ rooms }) {
@@ -49,7 +50,7 @@ const Content = styled.div`
 `;
 
 export const getStaticProps = async () => {
-  const res = await fetch("http://localhost:4000/rooms");
+  const res = await fetch(`${URL}/rooms`);
 
   const rooms = await res.json();
 
