@@ -8,7 +8,7 @@ function ListItem({ roomName, handleClick, active, newMessages, lastMessage, pic
     <Container>
       <Item onClick={handleClick} {...(active ? { className: "active" } : {})}>
         <RoomInfo>
-          <Avatar {...(privateChat ? { src: pictureUrl } : {})} />
+          <Avatar  src={pictureUrl}  />
           <RoomHeader>
             <h5>{roomName}</h5>
             <p>{lastMessage}</p>

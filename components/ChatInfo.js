@@ -1,21 +1,18 @@
 import React, { useContext } from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 import { Avatar, IconButton } from "@mui/material";
 import CallIcon from "@mui/icons-material/CallOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import { AppContext } from "../context/appContext";
 
-
 function ChatInfo() {
-
-  const { roomName, privateMemberMessage, imageUrl } =
-  useContext(AppContext);
+  const { roomName, imageUrl } = useContext(AppContext);
 
   return (
     <Container>
       <ChatHeader>
-        <Avatar {...(privateMemberMessage ? { src: imageUrl } : {})} />
+        <Avatar src={imageUrl} />
         <ProfileInfo>
           <h3>{roomName}</h3>
           <p>Last seen 2:02pm</p>

@@ -24,7 +24,8 @@ function Users({ joinRoom }) {
   const handleMemberMessage = async (member) => {
     const roomId = generatePrivateChatId(user._id, member._id);
     setPrivateMemberMessage(member);
-    joinRoom(roomId, false, member);
+    const { name, picture } = member;
+    joinRoom(roomId, picture, name, false);
   };
 
   return (
@@ -38,7 +39,6 @@ function Users({ joinRoom }) {
           <ListItem
             key={member._id}
             pictureUrl={member.picture}
-            privateChat
             roomName={member.name}
             active={member._id === privateMemberMessage?._id}
             handleClick={() => handleMemberMessage(member)}
