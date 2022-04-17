@@ -8,13 +8,18 @@ import RoomList from "./lists/RoomList";
 function Rooms({ joinRoom }) {
   const user = useSelector(selectUser);
 
-  const { socket, currentRoom, setCurrentRoom, rooms, setRooms } =
+  const { socket, currentRoom, setCurrentRoom, rooms } =
     useContext(AppContext);
+
+  const handleClick = (room) => {
+    joinRoom(room);
+  }
 
   useEffect(() => {
     if (user) {
       // const roomSelect = currentRoom || "general"
       setCurrentRoom("general");
+      setRoomName("general");
       // getRooms();
       socket.emit("join-room", "general");
       socket.emit("new-user");
@@ -23,14 +28,17 @@ function Rooms({ joinRoom }) {
 
   return (
     <RoomList header="Rooms" length={3}>
-      {rooms.map((room, i, { length }) => (
-        <ListItem
-          key={i}
-          roomName={room}
-          handleClick={() => joinRoom(room)}
-          active={room === currentRoom}
-        />
-      ))}
+      {rooms.map((room, i, { length }) => {
+        return (
+          <ListItem
+            key={i}
+            roomName={room}
+            handleClick={() => handleClick(room)}
+            active={room === currentRoom}
+            newMessages={user?.newMessages?.[room] || 0}
+          />
+        );
+      })}
     </RoomList>
   );
 }

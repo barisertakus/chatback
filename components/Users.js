@@ -6,7 +6,7 @@ import { generatePrivateChatId } from "../utils/chatUtils";
 import ListItem from "./lists/ListItem";
 import RoomList from "./lists/RoomList";
 
-function Users({joinRoom}) {
+function Users({ joinRoom }) {
   const user = useSelector(selectUser);
 
   const {
@@ -26,7 +26,7 @@ function Users({joinRoom}) {
     const roomId = generatePrivateChatId(user._id, member._id);
     joinRoom(roomId, false);
   };
-
+ 
   return (
     <RoomList header="Users" length={5}>
       {members.map((member) => (
@@ -35,6 +35,7 @@ function Users({joinRoom}) {
           roomName={member.name}
           active={member._id === privateMemberMessage?._id}
           handleClick={() => handleMemberMessage(member)}
+          newMessages={user?.newMessages?.[generatePrivateChatId(user._id, member._id)] || 0}
         />
       ))}
     </RoomList>
