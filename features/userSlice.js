@@ -1,6 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import usersApi from "../services/usersApi";
 
+/*
+ // Notification Structure
+{
+  "room1": [
+    { "content": "hello", "from": "Person1" },
+    { "content": "hello2", "from": "Person2" }
+  ],
+  "room2": [
+    { "content": "hi", "from": "Person5" },
+    { "content": "hi again", "from": "Person5" }
+  ]
+}
+
+*/
+
 const initialState = null;
 
 const userSlice = createSlice({
@@ -9,15 +24,27 @@ const userSlice = createSlice({
   reducers: {
     addNotifications: (state, action) => {
       const { payload } = action;
-      if (state.newMessages?.[payload]) {
-        state.newMessages[payload] += 1;
+      const { room, content, from } = payload;
+
+      const notification = state.newMessages?.[room];
+
+      if (notification) {
+        state.newMessages[room].push({ content, from });
       } else {
-        state.newMessages[payload] = 1;
+        // 0 notification
+        state.newMessages[room] = [{ content, from }];
       }
+
+      // if (state.newMessages?.[payload]) {
+      //   state.newMessages[payload] += 1;
+      // } else {
+      //   state.newMessages[payload] = 1;
+      // }
     },
     resetNotifications: (state, action) => {
-      const isEmpty = Object.getOwnPropertyNames(state).length === 0;
-      if (!isEmpty) delete state.newMessages[action.payload];
+      if(state?.newMessages?.[action.payload]){
+        delete state.newMessages[action.payload];
+      }
       // TODO undefined
     },
   },
