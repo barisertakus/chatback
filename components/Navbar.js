@@ -144,7 +144,7 @@ const Navbar = () => {
                   sx={{
                     my: 2,
                     color: "white",
-                    display: user && page.name === "login" ? "none" : "block",
+                    display: user?._id && page.name === "login" ? "none" : "block",
                   }}
                 >
                   {page.label}

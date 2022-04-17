@@ -1,15 +1,19 @@
 import React, { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { AppContext } from "../context/appContext";
-import { selectUser } from "../features/userSlice";
+import {
+  addNotifications,
+  resetNotifications,
+  selectUser,
+} from "../features/userSlice";
 import Rooms from "./Rooms";
 import Users from "./Users";
 
 function Sidebar() {
   const user = useSelector(selectUser);
-
-  const { socket, setCurrentRoom, setPrivateMemberMessage } =
+  const dispatch = useDispatch();
+  const { socket, currentRoom, setCurrentRoom, setPrivateMemberMessage } =
     useContext(AppContext);
 
   const joinRoom = (room, isPublic = true) => {
@@ -17,13 +21,19 @@ function Sidebar() {
       return alert("You must login!");
     }
 
-    socket.emit("join-room", room);
+    socket.emit("join-room", room, currentRoom);
     setCurrentRoom(room);
 
     if (isPublic) {
       setPrivateMemberMessage(null);
     }
+
+    dispatch(resetNotifications(room));
   };
+
+  socket.off("notifications").on("notifications", (room) => {
+    if (currentRoom != room) dispatch(addNotifications(room));
+  });
 
   return (
     <Container>
@@ -36,5 +46,5 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div`
-  height: 84vh;
+
 `;

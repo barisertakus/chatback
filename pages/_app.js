@@ -11,7 +11,8 @@ const persistedStore = persistStore(store);
 
 function MyApp({ Component, pageProps }) {
   const [rooms, setRooms] = useState([]);
-  const [currentRoom, setCurrentRoom] = useState({});
+  const [roomName, setRoomName] = useState("");
+  const [currentRoom, setCurrentRoom] = useState("");
   const [members, setMembers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [privateMemberMessage, setPrivateMemberMessage] = useState({});
@@ -21,6 +22,8 @@ function MyApp({ Component, pageProps }) {
     socket,
     rooms,
     setRooms,
+    roomName,
+    setRoomName,
     messages,
     setMessages,
     newMessages,
