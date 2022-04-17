@@ -1,12 +1,12 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-function ListItem({ roomName, handleClick, active }) {
+function ListItem({ roomName, handleClick, active, newMessages }) {
   // console.log(roomName, active)
   return (
     <Container>
-      <Item onClick={handleClick} {...(active ? {className: 'active'} : {})}>
+      <Item onClick={handleClick} {...(active ? { className: "active" } : {})}>
         <RoomInfo>
           <Avatar />
           <RoomHeader>
@@ -17,6 +17,7 @@ function ListItem({ roomName, handleClick, active }) {
 
         <TimeInfo>
           <p>Today, 9:52PM</p>
+          {!active && <StyledBadge badgeContent={newMessages} color="primary" /> }
         </TimeInfo>
       </Item>
     </Container>
@@ -26,7 +27,7 @@ function ListItem({ roomName, handleClick, active }) {
 export default ListItem;
 
 const Container = styled.li`
-  :hover{
+  :hover {
     background-color: #f0eded;
     border-radius: 10px;
     cursor: pointer;
@@ -34,13 +35,13 @@ const Container = styled.li`
 
   hr {
     margin: 0 5px;
-    border-top: 1px solid #B4ABAB;
+    border-top: 1px solid #b4abab;
   }
 `;
 
 const Item = styled.div`
-  &.active{
-    background-color : #d3d3d3;
+  &.active {
+    background-color: #d3d3d3;
     border-radius: 10px;
   }
   display: flex;
@@ -62,4 +63,13 @@ const RoomHeader = styled.div`
   }
 `;
 
-const TimeInfo = styled.div``;
+const TimeInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+
+const StyledBadge = styled(Badge)`
+  right: 10px;
+  bottom: 5px;
+`
