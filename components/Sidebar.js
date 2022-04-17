@@ -13,20 +13,31 @@ import Users from "./Users";
 function Sidebar() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const { socket, currentRoom, setCurrentRoom, setPrivateMemberMessage } =
-    useContext(AppContext);
+  const {
+    socket,
+    currentRoom,
+    setCurrentRoom,
+    setPrivateMemberMessage,
+    setRoomName,
+    setLoading
+  } = useContext(AppContext);
 
-  const joinRoom = (room, isPublic = true) => {
+  const joinRoom = async (room, isPublic = true, roomName) => {
     if (!user) {
       return alert("You must login!");
+    }
+    
+    setLoading(true);
+
+    if (isPublic) {
+      setPrivateMemberMessage(null);
+      setRoomName(room);
+    } else {
+      setRoomName(roomName);
     }
 
     socket.emit("join-room", room, currentRoom);
     setCurrentRoom(room);
-
-    if (isPublic) {
-      setPrivateMemberMessage(null);
-    }
 
     dispatch(resetNotifications(room));
   };
@@ -45,6 +56,4 @@ function Sidebar() {
 
 export default Sidebar;
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;

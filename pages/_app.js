@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
   const [messages, setMessages] = useState([]);
   const [privateMemberMessage, setPrivateMemberMessage] = useState({});
   const [newMessages, setNewMessages] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const providerValue = {
     socket,
@@ -34,6 +35,8 @@ function MyApp({ Component, pageProps }) {
     setMembers,
     privateMemberMessage,
     setPrivateMemberMessage,
+    loading,
+    setLoading,
   };
 
   return (

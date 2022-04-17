@@ -5,21 +5,32 @@ import ChatInfo from "./ChatInfo";
 import MessageInput from "./MessageInput";
 import MessageList from "./MessageList";
 import WhiteBox from "./WhiteBox";
+import Loading from "./Loading"
 
 function Messages() {
-  const { roomName, socket, messages, setMessages } = useContext(AppContext);
+  const { loading, roomName, socket, messages, setMessages, setLoading } =
+    useContext(AppContext);
 
   socket.off("room-messages").on("room-messages", (roomMessages) => {
     setMessages(roomMessages); // TODO
+    setLoading(false);
   });
 
   return (
     <WhiteBox>
       <Wrapper>
-        <ChatInfo chatName={roomName} />
-        <hr />
-        <MessageList messages={messages} />
-        <MessageInput />
+        {loading ? (
+          <LoadingWrapper>
+            <Loading className="loader">Loading...</Loading>
+          </LoadingWrapper>
+        ) : (
+          <>
+            <ChatInfo chatName={roomName} />
+            <hr />
+            <MessageList messages={messages} />
+            <MessageInput />
+          </>
+        )}
       </Wrapper>
     </WhiteBox>
   );
@@ -40,3 +51,11 @@ const Wrapper = styled.div`
     font-size: 14px;
   }
 `;
+
+const LoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+`;
+

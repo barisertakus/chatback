@@ -13,7 +13,6 @@ function Users({ joinRoom }) {
     socket,
     members,
     setMembers,
-    setRoomName,
     privateMemberMessage,
     setPrivateMemberMessage,
   } = useContext(AppContext);
@@ -22,13 +21,14 @@ function Users({ joinRoom }) {
     setMembers(payload);
   });
 
-  const handleMemberMessage = (member) => {
-    setPrivateMemberMessage(member);
-    setRoomName(member.name);
+  const handleMemberMessage = async (member) => {
+
     const roomId = generatePrivateChatId(user._id, member._id);
-    joinRoom(roomId, false);
+    setPrivateMemberMessage(member);
+    joinRoom(roomId, false, member.name);
+
   };
- 
+
   return (
     <RoomList header="Users" length={5}>
       {members.map((member) => (
@@ -37,7 +37,10 @@ function Users({ joinRoom }) {
           roomName={member.name}
           active={member._id === privateMemberMessage?._id}
           handleClick={() => handleMemberMessage(member)}
-          newMessages={user?.newMessages?.[generatePrivateChatId(user._id, member._id)] || 0}
+          newMessages={
+            user?.newMessages?.[generatePrivateChatId(user._id, member._id)] ||
+            0
+          }
         />
       ))}
     </RoomList>

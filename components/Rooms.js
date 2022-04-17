@@ -13,7 +13,6 @@ function Rooms({ joinRoom }) {
 
   const handleClick = (room) => {
     joinRoom(room);
-    setRoomName(room);
   }
 
   useEffect(() => {
