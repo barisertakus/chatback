@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }) {
   const [privateMemberMessage, setPrivateMemberMessage] = useState({});
   const [newMessages, setNewMessages] = useState({});
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const providerValue = {
     socket,
@@ -37,6 +38,8 @@ function MyApp({ Component, pageProps }) {
     setPrivateMemberMessage,
     loading,
     setLoading,
+    imageUrl,
+    setImageUrl,
   };
 
   return (

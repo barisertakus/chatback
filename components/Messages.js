@@ -25,7 +25,7 @@ function Messages() {
           </LoadingWrapper>
         ) : (
           <>
-            <ChatInfo chatName={roomName} />
+            <ChatInfo />
             <hr />
             <MessageList messages={messages} />
             <MessageInput />

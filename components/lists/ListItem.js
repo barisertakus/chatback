@@ -2,13 +2,13 @@ import { Avatar, Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-function ListItem({ roomName, handleClick, active, newMessages }) {
+function ListItem({ roomName, handleClick, active, newMessages, pictureUrl, privateChat }) {
   // console.log(roomName, active)
   return (
     <Container>
       <Item onClick={handleClick} {...(active ? { className: "active" } : {})}>
         <RoomInfo>
-          <Avatar />
+          <Avatar {...(privateChat ? { src: pictureUrl } : {})} />
           <RoomHeader>
             <h5>{roomName}</h5>
             <p>First Message</p>

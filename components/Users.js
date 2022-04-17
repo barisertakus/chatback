@@ -25,7 +25,7 @@ function Users({ joinRoom }) {
 
     const roomId = generatePrivateChatId(user._id, member._id);
     setPrivateMemberMessage(member);
-    joinRoom(roomId, false, member.name);
+    joinRoom(roomId, false, member);
 
   };
 
@@ -34,6 +34,8 @@ function Users({ joinRoom }) {
       {members.map((member) => (
         <ListItem
           key={member._id}
+          pictureUrl={member.picture}
+          privateChat
           roomName={member.name}
           active={member._id === privateMemberMessage?._id}
           handleClick={() => handleMemberMessage(member)}

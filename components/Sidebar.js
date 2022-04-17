@@ -19,10 +19,11 @@ function Sidebar() {
     setCurrentRoom,
     setPrivateMemberMessage,
     setRoomName,
-    setLoading
+    setLoading,
+    setImageUrl
   } = useContext(AppContext);
 
-  const joinRoom = async (room, isPublic = true, roomName) => {
+  const joinRoom = async (room, isPublic = true, member) => {
     if (!user) {
       return alert("You must login!");
     }
@@ -33,7 +34,8 @@ function Sidebar() {
       setPrivateMemberMessage(null);
       setRoomName(room);
     } else {
-      setRoomName(roomName);
+      setRoomName(member.name);
+      setImageUrl(member.picture)
     }
 
     socket.emit("join-room", room, currentRoom);
