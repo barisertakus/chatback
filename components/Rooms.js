@@ -28,14 +28,17 @@ function Rooms({ joinRoom }) {
 
   return (
     <RoomList header="Rooms" length={3}>
-      {rooms.map((room, i, { length }) => {
+      {rooms.map((room, i) => {
+        const length = user?.newMessages?.[room]?.length;
+        const lastMessage = user?.newMessages?.[room]?.[length-1].content;
         return (
           <ListItem
             key={i}
             roomName={room}
             handleClick={() => handleClick(room)}
             active={room === currentRoom}
-            newMessages={user?.newMessages?.[room] || 0}
+            newMessages={length || 0}
+            lastMessage={lastMessage || ""}
           />
         );
       })}

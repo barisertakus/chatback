@@ -22,29 +22,31 @@ function Users({ joinRoom }) {
   });
 
   const handleMemberMessage = async (member) => {
-
     const roomId = generatePrivateChatId(user._id, member._id);
     setPrivateMemberMessage(member);
     joinRoom(roomId, false, member);
-
   };
 
   return (
     <RoomList header="Users" length={5}>
-      {members.map((member) => (
-        <ListItem
-          key={member._id}
-          pictureUrl={member.picture}
-          privateChat
-          roomName={member.name}
-          active={member._id === privateMemberMessage?._id}
-          handleClick={() => handleMemberMessage(member)}
-          newMessages={
-            user?.newMessages?.[generatePrivateChatId(user._id, member._id)] ||
-            0
-          }
-        />
-      ))}
+      {members.map((member) => {
+        const checkId = generatePrivateChatId(user._id, member._id);
+        const length = user?.newMessages?.[checkId]?.length || 0
+        const lastMessage = user?.newMessages?.[checkId]?.[length - 1].content || "";
+
+        return (
+          <ListItem
+            key={member._id}
+            pictureUrl={member.picture}
+            privateChat
+            roomName={member.name}
+            active={member._id === privateMemberMessage?._id}
+            handleClick={() => handleMemberMessage(member)}
+            newMessages={length}
+            lastMessage={lastMessage}
+          />
+        );
+      })}
     </RoomList>
   );
 }

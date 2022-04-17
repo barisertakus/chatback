@@ -2,7 +2,7 @@ import { Avatar, Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
-function ListItem({ roomName, handleClick, active, newMessages, pictureUrl, privateChat }) {
+function ListItem({ roomName, handleClick, active, newMessages, lastMessage, pictureUrl, privateChat }) {
   // console.log(roomName, active)
   return (
     <Container>
@@ -11,7 +11,7 @@ function ListItem({ roomName, handleClick, active, newMessages, pictureUrl, priv
           <Avatar {...(privateChat ? { src: pictureUrl } : {})} />
           <RoomHeader>
             <h5>{roomName}</h5>
-            <p>First Message</p>
+            <p>{lastMessage}</p>
           </RoomHeader>
         </RoomInfo>
 
