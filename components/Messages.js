@@ -37,6 +37,6 @@ const Wrapper = styled.div`
 
   p {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
   }
 `;
