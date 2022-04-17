@@ -22,9 +22,12 @@ function MessageList({ messages }) {
   // roomMessages[1]?.messagesByDate || roomMessages[0]?.messagesByDate ||
 
   const generateMessageProps = (message) => {
-    const senderOrReceiver = message.from?._id === user._id ? "sender" : "receiver";
-    return privateMemberMessage ? senderOrReceiver + " hideName" : senderOrReceiver;
-  }
+    const senderOrReceiver =
+      message.from?._id === user._id ? "sender" : "receiver";
+    return privateMemberMessage
+      ? senderOrReceiver + " hideName"
+      : senderOrReceiver;
+  };
 
   return (
     <Container>
@@ -32,10 +35,7 @@ function MessageList({ messages }) {
         {messages.map((roomMessages) => {
           const { _id, messagesByDate } = roomMessages;
           return messagesByDate.map((message, i) => (
-            <Message
-              key={i}
-              className={generateMessageProps(message)}
-            >
+            <Message key={i} className={generateMessageProps(message)}>
               <h5>{message.from?.name}</h5>
               <p>{message.content}</p>
             </Message>
@@ -68,7 +68,9 @@ const Messages = styled.ul`
     margin: 0;
   }
 
-  p{
-    font-size: 14px;
+  &&& {
+    p {
+      font-size: 14px;
+    }
   }
 `;
