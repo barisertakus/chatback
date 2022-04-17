@@ -6,13 +6,13 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 
 
-function ChatInfo() {
+function ChatInfo({chatName}) {
   return (
     <Container>
       <ChatHeader>
         <Avatar />
         <ProfileInfo>
-          <h3>David</h3>
+          <h3>{chatName}</h3>
           <p>Last seen 2:02pm</p>
         </ProfileInfo>
       </ChatHeader>

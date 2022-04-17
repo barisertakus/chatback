@@ -13,6 +13,7 @@ function Users({ joinRoom }) {
     socket,
     members,
     setMembers,
+    setRoomName,
     privateMemberMessage,
     setPrivateMemberMessage,
   } = useContext(AppContext);
@@ -23,6 +24,7 @@ function Users({ joinRoom }) {
 
   const handleMemberMessage = (member) => {
     setPrivateMemberMessage(member);
+    setRoomName(member.name);
     const roomId = generatePrivateChatId(user._id, member._id);
     joinRoom(roomId, false);
   };

@@ -8,11 +8,12 @@ import RoomList from "./lists/RoomList";
 function Rooms({ joinRoom }) {
   const user = useSelector(selectUser);
 
-  const { socket, currentRoom, setCurrentRoom, rooms } =
+  const { socket, currentRoom, setCurrentRoom, setRoomName, rooms } =
     useContext(AppContext);
 
   const handleClick = (room) => {
     joinRoom(room);
+    setRoomName(room);
   }
 
   useEffect(() => {
