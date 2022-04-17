@@ -1,8 +1,14 @@
 import { Button } from "@mui/material";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { AppContext } from "../context/appContext";
+import { selectUser } from "../features/userSlice";
+import Message from "./Message";
 
 function MessageList({ messages }) {
+  const user = useSelector(selectUser);
+  const { privateMemberMessage } = useContext(AppContext);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -13,14 +19,28 @@ function MessageList({ messages }) {
     scrollToBottom();
   }, [messages]);
 
+  // roomMessages[1]?.messagesByDate || roomMessages[0]?.messagesByDate ||
+
+  const generateMessageProps = (message) => {
+    const senderOrReceiver = message.from?._id === user._id ? "sender" : "receiver";
+    return privateMemberMessage ? senderOrReceiver + " hideName" : senderOrReceiver;
+  }
+
   return (
     <Container>
       <Messages>
-        {messages.map((message, i) => (
-          <Message key={i} className={message.isSender ? "sender" : "receiver"}>
-            {message.content}
-          </Message>
-        ))}
+        {messages.map((roomMessages) => {
+          const { _id, messagesByDate } = roomMessages;
+          return messagesByDate.map((message, i) => (
+            <Message
+              key={i}
+              className={generateMessageProps(message)}
+            >
+              <h5>{message.from?.name}</h5>
+              <p>{message.content}</p>
+            </Message>
+          ));
+        })}
         <div ref={messagesEndRef} />
       </Messages>
     </Container>
@@ -34,7 +54,7 @@ const Container = styled.div`
 `;
 
 const Messages = styled.ul`
-  height: 440px;
+  height: 450px;
   margin: 24px auto 0 auto;
   padding: 0 20px 0 0;
   list-style: none;
@@ -44,57 +64,11 @@ const Messages = styled.ul`
   > div {
     float: left;
   }
-`;
-
-const Message = styled.li`
-  position: relative;
-  clear: both;
-  display: inline-block;
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-
-  @media (max-width: 768px) {
-    max-width: 280px;
+  h5 {
+    margin: 0;
   }
 
-  @media (min-width: 768px) {
-    max-width: 400px;
-  }
-
-  @media (min-width: 900px) and (max-width: 990px) {
-    max-width: 350px;
-  }
-
-  &::after {
-    position: absolute;
-    content: "";
-    width: 0;
-    height: 0;
-  }
-
-  &.receiver {
-    float: right;
-    margin-right: 20px;
-    color: white;
-    background-color: #6e00ff;
-  }
-
-  &.receiver:after {
-    border-top: 15px solid #6e00ff;
-    border-right: 15px solid transparent;
-    right: -15px;
-  }
-
-  &.sender {
-    float: left;
-    margin-left: 20px;
-    background-color: rgba(25, 147, 147, 0.2);
-  }
-
-  &.sender:after {
-    border-left: 15px solid transparent;
-    left: -15px;
-    border-top: 15px solid rgba(25, 147, 147, 0.2);
+  p{
+    font-size: 14px;
   }
 `;
