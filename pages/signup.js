@@ -1,11 +1,19 @@
 import UploadRoundedIcon from "@mui/icons-material/AddAPhoto";
-import { Button, IconButton } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  IconButton,
+  Snackbar,
+  Stack,
+} from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+import Router from "next/router";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useSignupUserMutation } from "../services/usersApi";
@@ -18,17 +26,28 @@ function Signup() {
   });
 
   const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [signupUser, { isLoading, error }] = useSignupUserMutation();
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+  });
+
+  const handleOpen = (message) => {
+    setSnackbar({ open: true, message: message });
+  };
+
+  const handleClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   const uploadImage = async () => {
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "nzupcol6");
     try {
-      setUploading(true);
       const res = await fetch(
         "https://api.cloudinary.com/v1_1/barisertakus/image/upload",
         {
@@ -37,24 +56,36 @@ function Signup() {
         }
       );
       const dataFromUrl = await res.json();
+      handleOpen("Image uploaded successfully.")
       return dataFromUrl.url;
     } catch (error) {
       console.log(error);
-    } finally {
-      setUploading(false);
+      handleOpen("An error occurred while uploading the image.");
     }
   };
 
   const handleSubmit = async (event) => {
-    console.log(signForm);
-    if (!image) return alert("Please upload your profile picture!");
+    //console.log(signForm);
+
+    if (!image) return handleOpen("Please upload your profile picture!");
+    setLoading(true);
     const url = await uploadImage(image);
-    console.log(url);
-    // const url = "test";
-    console.log({ ...signForm, picture: url })
-    signupUser({ ...signForm, picture: url }).then((response) => {
-      console.log(response);
-    });
+    signupUser({ ...signForm, picture: url })
+      .then((response) => {
+        console.log(response);
+        if (response.error) {
+          handleOpen(response.error.data);
+        } else {
+          Router.push("/chat");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        handleOpen("Registration has failed.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleChange = (e) => {
@@ -64,7 +95,10 @@ function Signup() {
   const validateUpload = (e) => {
     console.log(e.target.files);
     const file = e.target.files[0];
-    if (file.size > 1048576) {
+    if(!file){
+      return;
+    }
+    else if (file.size > 1048576) {
       return alert("Max file size is 1Mb !");
     } else {
       setImage(file);
@@ -138,15 +172,20 @@ function Signup() {
             </Grid>
           </Grid>
 
-          <Button
-            onClick={handleSubmit}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-
+          {loading ? (
+            <Stack alignItems="center" margin={2}>
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <Button
+              onClick={handleSubmit}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+          )}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/login">
@@ -156,6 +195,22 @@ function Signup() {
           </Grid>
         </Form>
       </SignupContainer>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          elevation={6}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

@@ -1,4 +1,5 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Alert, Box, CircularProgress, Snackbar, Stack } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
@@ -20,15 +21,40 @@ function Login() {
     password: "",
   });
 
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleOpen = (message) => {
+    setSnackbar({ open: true, message: message });
+  };
+
+  const handleClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   const [login, { isLoading, error }] = useLoginUserMutation();
 
   const { socket } = useContext(AppContext);
 
   const handleSubmit = (event) => {
-    login(loginForm).then((response) => {
-      socket.emit("new-user");
-      Router.push("/chat");
-    });
+    setLoading(true);
+    login(loginForm)
+      .then((response) => {
+        if (response.error) {
+          handleOpen(response.error.data);
+          return;
+        }
+        socket.emit("new-user");
+        Router.push("/chat");
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleChange = (e) => {
@@ -71,14 +97,20 @@ function Login() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
-          >
-            Sign In
-          </Button>
+          {loading ? (
+            <Stack alignItems="center">
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleSubmit}
+            >
+              Sign In
+            </Button>
+          )}
           <Grid container>
             <Grid item>
               <Link href="signup">
@@ -88,6 +120,23 @@ function Login() {
           </Grid>
         </Form>
       </LoginContainer>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          elevation={6}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
