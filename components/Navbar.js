@@ -19,8 +19,8 @@ import Router from "next/router";
 import { AppContext } from "../context/appContext";
 
 const pages = [
-  { label: "Chat", name: "chat" },
-  { label: "Login", name: "login" },
+  { label: "Chat", name: "chat", auth:true },
+  { label: "Login", name: "login", auth:false },
 ];
 const settings = ["Logout"];
 
@@ -65,8 +65,8 @@ const Navbar = () => {
       <Box
         component="img"
         src="/assets/chatback-logo.png"
-        sx={{ height: 80, width: 80, cursor:"pointer" }}
-        onClick={()=>Router.push("/")}
+        sx={{ height: 80, width: 80, cursor: "pointer" }}
+        onClick={() => Router.push("/")}
       />
     );
   };
@@ -113,7 +113,7 @@ const Navbar = () => {
                   key={i}
                   onClick={handleCloseNavMenu}
                   style={{
-                    display: user && page.name === "login" ? "none" : "block",
+                    display: (page.auth && !user?._id) || (!page.auth && user?._id) ? "none" : "block",
                   }}
                 >
                   <Link href={"/" + page.name}>
@@ -144,7 +144,8 @@ const Navbar = () => {
                   sx={{
                     my: 2,
                     color: "white",
-                    display: user?._id && page.name === "login" ? "none" : "block",
+                    display:
+                    (page.auth && !user?._id) || (!page.auth && user?._id) ? "none" : "block",
                   }}
                 >
                   {page.label}
