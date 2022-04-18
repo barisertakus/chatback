@@ -15,6 +15,7 @@ function Rooms({ joinRoom }) {
     setRoomName,
     rooms,
     setImageUrl,
+    setPrivateMemberMessage,
   } = useContext(AppContext);
 
   const handleClick = (room) => {
@@ -22,12 +23,13 @@ function Rooms({ joinRoom }) {
   };
 
   useEffect(() => {
-    if (user && rooms?.length > 0) {
+    if (user && !currentRoom && rooms?.length > 0) {
       // const roomSelect = currentRoom || "general"
       const { name, imageUrl } = rooms[0];
       setCurrentRoom(name);
       setRoomName(name);
       setImageUrl(imageUrl);
+      setPrivateMemberMessage("");
       // getRooms();
       socket.emit("join-room", name);
       socket.emit("new-user");
