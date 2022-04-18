@@ -16,8 +16,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import { useLogoutUserMutation } from "../services/usersApi";
 import Router from "next/router";
-import {AppContext} from "../context/appContext"
-import { RouteSharp } from "@mui/icons-material";
+import { AppContext } from "../context/appContext";
 
 const pages = [
   { label: "Chat", name: "chat" },
@@ -28,13 +27,11 @@ const settings = ["Logout"];
 const Navbar = () => {
   const user = useSelector(selectUser);
   const [logoutUser] = useLogoutUserMutation();
-  const {setRooms, setMembers, setMessages} = useContext(AppContext);
-
+  const { setLoading, setRooms, setMembers, setMessages } =
+    useContext(AppContext);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,13 +49,16 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
+    setLoading(true);
     await logoutUser(user);
     handleCloseUserMenu();
-    setMembers([])
-    setRooms([])
+    setMembers([]);
+    setRooms([]);
     setMessages([]);
-    Router.push("/")
-  }
+    Router.push("/").then(()=>{
+      setLoading(false);
+    })
+  };
 
   const Logo = () => {
     return (
